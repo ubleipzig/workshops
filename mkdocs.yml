@@ -1,0 +1,9 @@
+site_name: Workshop-Dokumentationen
+pages:
+- Home: index.md
+- GIT:
+  - Beginners: git/beginners.md
+  - Advanced: git/advanced.md
+- VuFind-Docker: vufind-docker.md
+- MkDocs: mkdocs.md
+theme: readthedocs
