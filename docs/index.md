@@ -1,6 +1,6 @@
 # Workshop-Dokumentationen
 
-Eine Sammlung an Workshop-Dokumentationen, die den Teilnehmern als Ausdruck augehändigt werden können.
+Eine Sammlung an Workshop-Dokumentationen, die den Teilnehmern als Ausdruck ausgehändigt werden können.
 
 1. GIT
 	1. [Beginners](git/beginners)
