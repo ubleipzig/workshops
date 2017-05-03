@@ -60,7 +60,7 @@ $ git config --global push.default simple
 ## Repository klonen
 
 ```bash
-$ git clone git@git.ub.intern.uni-leipzig.de:git-workshop
+$ git clone workshop@git.ub.intern.uni-leipzig.de:git-workshop
 Klone nach 'git-workshop' ...
 Fertig.
 ```
@@ -82,8 +82,8 @@ nothing to commit, working tree clean
 
 ```bash
 $ git remote -v
-origin  git@git.ub.intern.uni-leipzig.de:git-workshop (fetch)
-origin  git@git.ub.intern.uni-leipzig.de:git-workshop (push)
+origin  workshop@git.ub.intern.uni-leipzig.de:git-workshop (fetch)
+origin  workshop@git.ub.intern.uni-leipzig.de:git-workshop (push)
 ```
 
 * `git clone` fügt automatisch den Server, von dem das Repository geklont wurde, als *origin*-Remote hinzu
@@ -272,7 +272,7 @@ Delta compression using up to 8 threads.
 Komprimiere Objekte: 100% (4/4), Fertig.
 Schreibe Objekte: 100% (5/5), 564 bytes | 0 bytes/s, Fertig.
 Total 5 (delta 0), reused 0 (delta 0)
-To git@git.ub.intern.uni-leipzig.de:git-workshop
+To workshop@git.ub.intern.uni-leipzig.de:git-workshop
    f5c2a5c..8c298ce  master -> master
 
 $ git status
@@ -332,7 +332,7 @@ Date:   Wed Apr 5 10:49:15 2017 +0200
     created mkdocs structure
 ```
 
-### `git push --set-upstream origin <local-branch-name>:` veröffentlicht den Branch
+### `git push --set-upstream origin <local-branch-name>` veröffentlicht den Branch
 
 ```bash
 $ git push --set-upstream origin create-git-beginners-docs
@@ -362,7 +362,7 @@ Already up-to-date.
 
 ```bash
 $ git pull origin master
-Von git@git.ub.intern.uni-leipzig.de:git-workshop
+Von workshop@git.ub.intern.uni-leipzig.de:git-workshop
  * branch            master     -> FETCH_HEAD
 Merge made by the 'recursive' strategy.
  docs/index.md  | 18 ++----------------
