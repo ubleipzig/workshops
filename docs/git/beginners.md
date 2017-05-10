@@ -88,44 +88,7 @@ origin  workshop@git.ub.intern.uni-leipzig.de:git-workshop (push)
 
 * `git clone` fügt automatisch den Server, von dem das Repository geklont wurde, als *origin*-Remote hinzu
 
-## Dateien umbenennen
-
-Änderungen werden nicht automatisch zum Commit vorgemerkt, wenn man Dateien im Arbeitsverzeichnis umbenennt oder löscht. Man muss diese Änderungen - wie inhaltliche Änderungen - explizit zum Commit vormerken.
-
-```bash
-$ mv docs/index.md docs/mkdocs.md
-$ git status
-Auf Branch master
-Ihr Branch ist auf dem selben Stand wie 'origin/master'.
-Änderungen, die nicht zum Commit vorgemerkt sind:
-  (benutzen Sie "git add/rm <Datei>...", um die Änderungen zum Commit vorzumerken)
-  (benutzen Sie "git checkout -- <Datei>...", um die Änderungen im Arbeitsverzeichnis zu verwerfen)
-
-        gelöscht:       docs/index.md
-
-Unversionierte Dateien:
-  (benutzen Sie "git add <Datei>...", um die Änderungen zum Commit vorzumerken)
-
-        docs/mkdocs.md
-
-keine Änderungen zum Commit vorgemerkt (benutzen Sie "git add" und/oder "git commit -a")
-$ git rm docs/index.md
-$ git add docs/mkdocs.md
-$ $ git status
-Auf Branch master
-Ihr Branch ist auf dem selben Stand wie 'origin/master'.
-zum Commit vorgemerkte Änderungen:
-  (benutzen Sie "git reset HEAD <Datei>..." zum Entfernen aus der Staging-Area)
-
-        umbenannt:      docs/index.md -> docs/mkdocs.md
-
-```
-
-* git erkennt, dass eine Datei umbenannt wurde, in dem der Inhalt der Dateien verglichen wird
-* werden zwischen Umbenennen und Hinzufügen zur Versionskontrolle Änderungen am Inhalt der Datei vorgenommen wird die Datei nicht als *umbenannt* erkannt
-
-### besser Dateien umbenennen mit `git mv <src> <dst>`
-
+## Dateien umbenennen mit `git mv <src> <dst>`
 
 ```bash
 $ git mv docs/index.md docs/mkdocs.md
@@ -139,7 +102,12 @@ zum Commit vorgemerkte Änderungen:
 
 ```
 
+* git erkennt, dass eine Datei umbenannt wurde, in dem der Inhalt der Dateien verglichen wird
+* werden zwischen Umbenennen und Hinzufügen zur Versionskontrolle Änderungen am Inhalt der Datei vorgenommen wird die Datei nicht als *umbenannt* erkannt
+
 ## Code ändern / Dateien hinzufügen
+
+***`mkdocs.yml` ändern, `docs/index.md` hinzufügen, siehe `patches/code_ändern_dateien_hinzufügen.patch`***
 
 ### `git status` zeigt geänderte Dateien
 
@@ -235,6 +203,25 @@ $ git commit
 * leere Commit-Beschreibung bricht Commit ab
 * Änderungen wurden als ein Commit in das **lokale** Repository gestellt
 
+lokales Repository weicht um einen Commit vom Remote-Server ab
+
+```bash
+$ git status
+Auf Branch master
+Ihr Branch ist vor 'origin/master' um 1 Commit.
+  (benutzen Sie "git push", um lokale Commits zu publizieren)
+nothing to commit, working tree clean
+
+```
+
+## Die Historie
+
+Die Entwicklung des Projektes veranschaulicht die Historie der Versionskontrolle.
+Sie hilft, den Ursprung von Implementationen, Autoren und Bemerkungen anzuzeigen
+und nachzuvollziehen.
+
+### `git log` zeigt gesamte Historie eines Branches
+
 ```bash
 $ git log
 commit 66f8437bd5b8d26d5e65ee1af25a82b52dcf82a5
@@ -252,16 +239,30 @@ Date:   Wed Apr 5 10:49:15 2017 +0200
     created mkdocs structure
 ```
 
-lokales Repository weicht um einen Commit vom Remote-Server ab
+* zeigt neben eineindeutigen Commit-Hash, Commit-Autor und Commit-Datum, zusätzlich
+ die Commit-Bemerkung
+* Sortierung erfolgt nach Anwendung des Commits und muss nicht dem Commit-Datum
+ entsprechen
 
 ```bash
-$ git status
-Auf Branch master
-Ihr Branch ist vor 'origin/master' um 1 Commit.
-  (benutzen Sie "git push", um lokale Commits zu publizieren)
-nothing to commit, working tree clean
+$ git log --follow mkdocs.yml
+commit 66f8437bd5b8d26d5e65ee1af25a82b52dcf82a5
+Author: Roy Trenneman <roy@reynholm-industries.co.uk>
+Date:   Wed Apr 26 17:02:45 2017 +0200
 
+    * moved brief mkdocs docu to separate page
+    * created new index page
+    * modified title
+
+commit 27c4a4334ac4c55bb5585729fcd64a4eeb889743
+Author: Jen Barber <jen@reynholm-industries.co.uk>
+Date:   Wed Apr 5 10:49:15 2017 +0200
+
+    created mkdocs structure
 ```
+
+* zeigt nur die Commit-Historie, welche die angegebene Datei betrifft, auch, wenn sie nicht mehr in der Versionkontrolle vorhanden ist
+* die Datei muss im Arbeitsbereich vorhanden sein
 
 ### `git push` veröffentlicht den neuen Commit auf Remote-Server
 
@@ -295,6 +296,7 @@ Zu Branch 'create-git-beginners-docs' gewechselt
 * shortcut wäre `git checkout -b create-git-beginners-docs`
 * Änderungen werden beim Branch-Wechseln zum neuen Branch mitgenommen, sofern möglich
 
+***`docs/git-beginners.md` erstellen, `docs/index.md` ändern, siehe `patches/branches_erstellen.patch`***
 
 ### `git add` und `git commit` zum Speichern der Änderungen
 
@@ -349,7 +351,7 @@ Branch create-git-beginners-docs konfiguriert zum Folgen von Remote-Branch creat
 * neuer Branch wird veröffentlicht und zum Folgen des gleichen konfiguriert
 * durch `--set-upstream` wird der Remote-Server und Branch als Referenz eingetragen, um `git pull`, `git push`, `git status` ohne Argumente aufzurufen
 
-## Branches aktuell halten
+## Branches aktuell halten (auf Branch *create-vufind-docker-docs*)
 
 ```bash
 $ git checkout create-vufind-docker-docs
@@ -360,9 +362,11 @@ Already up-to-date.
 
 * ohne Angabe von Remote-Server und Branch wird der aktuelle Branch mit Änderungen des referenzierten Branchs aktualisiert
 
+***`docs/vufind-docker.md` ändern, siehe `patches/branch_aktuell_halten.patch`, commit erstellen***
+
 ```bash
 $ git pull origin master
-Von workshop@git.ub.intern.uni-leipzig.de:git-workshop
+Von git.ub.intern.uni-leipzig.de:git-workshop
  * branch            master     -> FETCH_HEAD
 Merge made by the 'recursive' strategy.
  docs/index.md  | 18 ++----------------
@@ -370,14 +374,30 @@ Merge made by the 'recursive' strategy.
  mkdocs.yml     |  2 +-
  3 files changed, 20 insertions(+), 17 deletions(-)
  create mode 100644 docs/mkdocs.md
+```
 
+```bash
 $ git log
-commit 1f6537c5c7045a6baad78beb6537d1cb7aa564dd
-Merge: 1f01e40 82c53ee
+commit 5969abcb120c31977453629f41df9a2268f2fe70
+Merge: f1a9427 202ba1a
 Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 15:26:14 2017 +0200
+Date:   Wed May 10 15:24:26 2017 +0200
 
     Merge branch 'master' of git.ub.intern.uni-leipzig.de:git-workshop into create-vufind-docker-docs
+
+commit f1a9427c2087674fab1b6648ba5a8c70f2f833ae
+Author: Roy Trenneman <roy@reynholm-industries.co.uk>
+Date:   Wed May 10 15:23:57 2017 +0200
+
+    WIP made changes to docs
+
+commit 202ba1a4e25e2af3d101849c0565da16a181b075
+Author: Roy Trenneman <roy@reynholm-industries.co.uk>
+Date:   Wed May 10 14:33:07 2017 +0200
+
+    * moved brief mkdocs docu to separate page
+    * created new index page
+    * modified title
 
 commit 1f01e40096b96b33baab268ac1823ef5a99c5f1c
 Author: Richmond Avenal <richmond@reynholm-industries.co.uk>
@@ -391,14 +411,6 @@ Date:   Thu Apr 27 14:42:13 2017 +0200
 
     initially added vufind-docker documentation
 
-commit 82c53ee44523e928adc7a58a91586c5469748da4
-Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 14:58:23 2017 +0200
-
-    * moved brief mkdocs docu to separate page
-    * created new index page
-    * modified title
-
 commit 10aeed70270a918e137c7e693a14f79197023977
 Author: Jen Barber <jen@reynholm-industries.co.uk>
 Date:   Wed Apr 5 10:49:15 2017 +0200
@@ -407,19 +419,30 @@ Date:   Wed Apr 5 10:49:15 2017 +0200
 ```
 
 * gibt man Remote-Server und Branch an, werden dessen Änderungen in den aktuellen Branch gemerged
+* *merge* sortiert den fehlenden *master*-Commit chronologisch ein
 
-## Ignorierte Dateien
+## Ignorierte Dateien (auf Branch *master*)
 
 Beim Testen der Entwicklung entstehen temporäre Dateien, die nicht in der Versionskontrolle erfasst werden sollen.
 Diese Dateien und Verzeichnisse werden in einer Datei `.gitignore` aufgelistet.
 
 ```bash
 $ git checkout master
+Zu Branch 'master' gewechselt
+Ihr Branch ist auf dem selben Stand wie 'origin/master'.
+```
 
+* wechselt die Arbeitskopie auf den Branch *master*
+
+```bash
 $ mkdocs build
 INFO    -  Cleaning site directory
 INFO    -  Building documentation to directory: /home/roy/git-workshop/site
+```
 
+* *mkdocs*-Befehl zum Erzeugen der statischen Seiten aus dem Projekt
+
+```bash
 $ git status
 Auf Branch master
 Ihr Branch ist auf dem selben Stand wie 'origin/master'.
@@ -438,6 +461,11 @@ nichts zum Commit vorgemerkt, aber es gibt unversionierte Dateien (benutzen Sie 
 $ cat >.gitignore <<EOF
 /site
 EOF
+```
+
+* erzeugt Datei `.gitignore` mit einem Eintrag
+
+```bash
 
 $ git status
 Auf Branch master
@@ -450,30 +478,7 @@ Unversionierte Dateien:
 nichts zum Commit vorgemerkt, aber es gibt unversionierte Dateien (benutzen Sie "git add" zum Versionieren)
 ```
 
-### `git ls-files --other --ignored --exclude-standard` zeigt von Versionskontrolle ausgenommene Dateien
-
-```bash
-$ git ls-files  --other  --ignored --exclude-standard
-site/css/highlight.css
-site/css/theme.css
-site/css/theme_extra.css
-...
-site/search.html
-site/sitemap.xml
-site/vufind/index.html
-```
-
-### `git clean -fdX` löscht alle Dateien, die von der Versionkontrolle ausgenommen sind
-
-```bash
-$ git clean -fdXn
-Würde site/ löschen
-
-$ git clean -fdX
-Lösche site/
-```
-* Vorsicht! `-x` löscht auch Dateien, die nicht zur Versionkontrolle hinzugefügt wurden
-
+* GIT behandelt `.gitignore` als neue unversionierte Datei innerhalb der Arbeitskopie
 
 ```bash
 $ git add .gitignore
@@ -495,23 +500,32 @@ To git.ub.intern.uni-leipzig.de:git-workshop
 
 * `.gitignore` werden üblicherweise im Projekt erfasst
 
-## Der Stash
+***Ordner `/site` entfernen***
+## Der Stash (auf Branch *create-vufind-docker-docs*)
 
 Wenn Dateien im Arbeitbereich durch GIT aktualisiert werden sollen (`git pull/merge/apply ...`), diese Dateien aber Änderungen aufweisen, bricht die GIT-Aktion ab, um die neuen Änderungen nicht zu überschreiben.
 
 ```bash
 $ git checkout create-vufind-docker-docs
 Zu Branch 'create-vufind-docker-docs' gewechselt
-Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 2 Commits.
+Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 3 Commits.
   (benutzen Sie "git push", um lokale Commits zu publizieren)
+```
 
+* zwei Commits sind noch nicht mit dem referenzierten Remote-Server Branch synchronisiert
+
+```bash
 $ cat >.gitignore <<EOF
 /.vscode
 EOF
+```
 
+* erzeugt Datei `.gitignore` mit einem Eintrag
+
+```bash
 $ git status
 Auf Branch create-vufind-docker-docs
-Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 2 Commits.
+Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 3 Commits.
   (benutzen Sie "git push", um lokale Commits zu publizieren)
 Unversionierte Dateien:
   (benutzen Sie "git add <Datei>...", um die Änderungen zum Commit vorzumerken)
@@ -519,7 +533,11 @@ Unversionierte Dateien:
         .gitignore
 
 nichts zum Commit vorgemerkt, aber es gibt unversionierte Dateien (benutzen Sie "git add" zum Versionieren)
+```
 
+* `.gitignore` befindet sich als unversionierte Datei innerhalb der Arbeitskopie
+
+```bash
 $ git pull origin master
 Von git.ub.intern.uni-leipzig.de:git-workshop
  * branch            master     -> FETCH_HEAD
@@ -529,31 +547,34 @@ Please move or remove them before you merge.
 Abbruch
 ```
 
+* führt zum Abbruch des Merges, da neu zu erzeugende Datei bereits vorhanden ist
+* es ist kein Merge möglich, da GIT keine Informationen über den Inhalt der Datei hat (Commit)
+
 Getrackte Änderungen (geänderte Dateien, hinzugefügte Dateien) können in einen Branch-übergreifenden
 Stapel zwischengespeichert werden. Gleichzeitig wird der aktuelle Branch von diesen Änderungen bereinigt.
 
 ```bash
 $ git add .gitignore
+```
+
+* fügt `.gitignore` zur Versionskontrolle hinzu
+
+```bash
 $ git stash
 Saved working directory and index state WIP on create-vufind-docker-docs: 1f6537c Merge branch 'master' of git.ub.intern.uni-leipzig.de:git-workshop into create-vufind-docker-docs
 HEAD ist jetzt bei 1f6537c Merge branch 'master' of git.ub.intern.uni-leipzig.de:git-workshop into create-vufind-docker-docs
-
-$ git status
-Auf Branch create-vufind-docker-docs
-Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 2 Commits.
-  (benutzen Sie "git push", um lokale Commits zu publizieren)
-nothing to commit, working tree clean
-
-$ git stash list
-stash@{0}: WIP on create-vufind-docker-docs: 1f6537c Merge branch 'master' of git.ub.intern.uni-leipzig.de:git-workshop into create-vufind-docker-docs
-
-$ git stash show
- .gitignore | 1 +
- 1 file changed, 1 insertion(+)
 ```
 
-* unversionierte Dateien werden nicht gestashed
-* der Stash wird nach dem Commit benannt, auf den die gestashten Änderungen aufsetzen
+* alle Änderungen, die sich in der Staging-Area befinden, werden den *Stash* verschoben
+* die Arbeitskopie wird von den Änderungen bereinigt
+
+```bash
+$ git stash list
+stash@{0}: WIP on create-vufind-docker-docs: 1f6537c Merge branch 'master' of git.ub.intern.uni-leipzig.de:git-workshop into create-vufind-docker-docs
+```
+
+* im Stash befindet sich ein Puffer, der unsere Änderungen vorhält
+* standardmäßig ist der Puffer-Name der Commit, auf welchen die Änderungen aufsetzen
 
 ```bash
 $ git pull origin master
@@ -563,26 +584,27 @@ Merge made by the 'recursive' strategy.
  .gitignore | 1 +
  1 file changed, 1 insertion(+)
  create mode 100644 .gitignore
+```
 
+* merge konnte problemlos angewendet werden
+
+```bash
 $ cat .gitignore
 /site
+```
 
-$ git stash pop
+* neue Datei `.gitignore` ist auf dem Stand, wie *master*
+
+```bash
+$ git stash apply
 automatischer Merge von .gitignore
 KONFLIKT (hinzufügen/hinzufügen): Merge-Konflikt in .gitignore
+```
 
-$ git status
-Auf Branch create-vufind-docker-docs
-Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 4 Commits.
-  (benutzen Sie "git push", um lokale Commits zu publizieren)
-Nicht zusammengeführte Pfade:
-  (benutzen Sie "git reset HEAD <Datei>..." zum Entfernen aus der Staging-Area)
-  (benutzen Sie "git add/rm <Datei>...", um die Auflösung zu markieren)
+* wendet den letzten Stash-Puffer auf den aktuellen Branch an
+* Konflikt in `.gitignore` wird angemerkt und muss manuell aufgelöst werden
 
-        von beiden hinzugefügt: .gitignore
-
-keine Änderungen zum Commit vorgemerkt (benutzen Sie "git add" und/oder "git commit -a")
-
+```bash
 $ cat .gitignore
 <<<<<<< Updated upstream
 /site
@@ -591,24 +613,10 @@ $ cat .gitignore
 >>>>>>> Stashed changes
 ```
 
-* auftretende Konflikte müssen aufgelöst werden
+* *Updated upstream* bezeichnet die Änderungen, welche seit den eigenen, anzuwendenden Änderungen hinzugekommen sind
+* *Stashed changes* bezeichnet die Änderungen, welche durch Anwendung des Stashes eingefügt werden sollen
 
-```bash
-$ git add .gitignore
-
-$ git status
-Auf Branch create-vufind-docker-docs
-Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 4 Commits.
-  (benutzen Sie "git push", um lokale Commits zu publizieren)
-zum Commit vorgemerkte Änderungen:
-  (benutzen Sie "git reset HEAD <Datei>..." zum Entfernen aus der Staging-Area)
-
-        geändert:       .gitignore
-
-$ git commit
-[create-vufind-docker-docs e705442] added /.vscode/ to .gitignore
- 1 file changed, 1 insertion(+)
-```
+***Konflikt in `.gitignore` auflösen***
 
 ## Dateien löschen
 
@@ -621,121 +629,17 @@ Author: Richmond Avenal <richmond@reynholm-industries.co.uk>
 Date:   Thu Apr 27 14:42:34 2017 +0200
 
     added ide config
+```
 
+* zeigt alle Commits, in denen die spezifizierten Dateien oder Verzeichnisse vorkommen
+
+```bash
 $ git rm --cached .vscode/tasks.json
 rm '.vscode/tasks.json'
-
-$ git status
-Auf Branch create-vufind-docker-docs
-Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 5 Commits.
-  (benutzen Sie "git push", um lokale Commits zu publizieren)
-zum Commit vorgemerkte Änderungen:
-  (benutzen Sie "git reset HEAD <Datei>..." zum Entfernen aus der Staging-Area)
-
-        gelöscht:       .vscode/tasks.json
 ```
 
-* Datei ist noch vorhanden, wird jedoch nicht als ungetrackte Datei angezeigt, weil das Verzeichnis *.vscode*
- in der Datei `.gitignore` aufgeführt ist.
-
-```bash
-$ git commit
-[create-vufind-docker-docs 2eb44bb] removed ide config
- 1 file changed, 28 deletions(-)
- delete mode 100644 .vscode/tasks.json
-```
-
-## Die Historie
-
-Die Entwicklung des Projektes veranschaulicht die Historie der Versionskontrolle.
-Sie hilft, den Ursprung von Implementationen, Autoren und Bemerkungen anzuzeigen
-und nachzuvollziehen.
-
-### `git log` zeigt gesamte Historie eines Branches
-
-```bash
-$ git log
-commit 2eb44bbe8c11455cd4b24b3adda8ff2918d55855
-Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 16:49:00 2017 +0200
-
-    removed ide config
-
-commit e705442108cc12c254c239d010cc5fe0eeb9808e
-Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 16:46:17 2017 +0200
-
-    added /.vscode/ to .gitignore
-
-commit 4b9c46afca616341275cf831fe8b1fb237d4f1d0
-Merge: 1f6537c 67daf34
-Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 16:44:18 2017 +0200
-
-    Merge branch 'master' of git.ub.intern.uni-leipzig.de:git-workshop into create-vufind-docker-docs
-
-commit 67daf3464058aeb0a955a5acecb8dfc59fda22e4
-Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 15:32:12 2017 +0200
-
-    created .gitignore by adding /site
-
-commit 1f6537c5c7045a6baad78beb6537d1cb7aa564dd
-Merge: 1f01e40 82c53ee
-Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 15:26:14 2017 +0200
-
-    Merge branch 'master' of git.ub.intern.uni-leipzig.de:git-workshop into create-vufind-docker-docs
-
-commit 1f01e40096b96b33baab268ac1823ef5a99c5f1c
-Author: Richmond Avenal <richmond@reynholm-industries.co.uk>
-Date:   Thu Apr 27 14:42:34 2017 +0200
-
-    added ide config
-
-commit ef542025b53c461576f37f43c0951df72a2b92aa
-Author: Richmond Avenal <richmond@reynholm-industries.co.uk>
-Date:   Thu Apr 27 14:42:13 2017 +0200
-
-    initially added vufind-docker documentation
-
-commit 82c53ee44523e928adc7a58a91586c5469748da4
-Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 14:58:23 2017 +0200
-
-    * moved brief mkdocs docu to separate page
-    * created new index page
-    * modified title
-
-commit 10aeed70270a918e137c7e693a14f79197023977
-Author: Jen Barber <jen@reynholm-industries.co.uk>
-Date:   Wed Apr 5 10:49:15 2017 +0200
-
-    created mkdocs structure
-```
-
-* zeigt neben eineindeutigen Commit-Hash, Commit-Autor und Commit-Datum, zusätzlich
- die Commit-Bemerkung
-* Sortierung erfolgt nach Anwendung des Commits und muss nicht dem Commit-Datum
- entsprechen
-
-```bash
-$ git log --follow .vscode/tasks.json
-commit 2eb44bbe8c11455cd4b24b3adda8ff2918d55855
-Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Thu Apr 27 16:49:00 2017 +0200
-
-    removed ide config
-
-commit 1f01e40096b96b33baab268ac1823ef5a99c5f1c
-Author: Richmond Avenal <richmond@reynholm-industries.co.uk>
-Date:   Thu Apr 27 14:42:34 2017 +0200
-
-    added ide config
-```
-
-* zeigt nur die Commit-Historie, welche die angegebene Datei betrifft, auch, wenn sie nicht mehr in der Versionkontrolle vorhanden ist
-* die Datei muss im Arbeitsbereich vorhanden sein
+* entfernt die spezifizierte Datei aus der Versionskontrolle, behält sie aber in der Arbeitskopie
+* Eintrag in `.gitignore` verhindert, dass die Datei als unversionierte Datei aufgeführt wird
 
 ## Diffs
 
@@ -746,86 +650,126 @@ mittels `git apply` oder dem Unix-Kommandozeilen-Tool [`patch`][1].
 
 ```bash
 $ git status
-Auf Branch master
-Ihr Branch ist auf dem selben Stand wie 'origin/master'.
+Auf Branch create-vufind-docker-docs
+Ihr Branch ist vor 'origin/create-vufind-docker-docs' um 5 Commits.
+  (benutzen Sie "git push", um lokale Commits zu publizieren)
 zum Commit vorgemerkte Änderungen:
   (benutzen Sie "git reset HEAD <Datei>..." zum Entfernen aus der Staging-Area)
 
-        geändert:       docs/git.md
+	gelöscht:       .vscode/tasks.json
 
 Änderungen, die nicht zum Commit vorgemerkt sind:
   (benutzen Sie "git add <Datei>...", um die Änderungen zum Commit vorzumerken)
   (benutzen Sie "git checkout -- <Datei>...", um die Änderungen im Arbeitsverzeichnis zu verwerfen)
 
-        geändert:       docs/git.md
-
-
+	geändert:       .gitignore
 ```
 
 ### `git diff` zeigt die Unterschiede zur Arbeitskopie
 
 ```bash
 $ git diff
-diff --git a/mkdocs.yml b/mkdocs.yml
-index 3212117..3dca70e 100644
---- a/mkdocs.yml
-+++ b/mkdocs.yml
+diff --git a/.gitignore b/.gitignore
+index c9490a5..4eeb754 100644
+--- a/.gitignore
++++ b/.gitignore
 @@ -1 +1,2 @@
- site_name: Workshop Dokumentationen
-+theme: readthedocs
+ /site
++/.vscode
 ```
+
+* zeigt alle Änderungen in Dateien, die bereits der Versionskontrolle unterliegen und nicht in Staging-Area aufgenommen wurden
 
 ### `git diff --staged` zeigt die Unterschiede der Staging-Area zur Arbeitskopie
 
 ```bash
-$ git add mkdocs.yml
 $ git diff --staged
-diff --git a/mkdocs.yml b/mkdocs.yml
-index 3212117..3dca70e 100644
---- a/mkdocs.yml
-+++ b/mkdocs.yml
-@@ -1 +1,2 @@
- site_name: Workshop Dokumentationen
-+theme: readthedocs
-
+diff --git a/.vscode/tasks.json b/.vscode/tasks.json
+deleted file mode 100644
+index 4625e49..0000000
+--- a/.vscode/tasks.json
++++ /dev/null
+@@ -1,28 +0,0 @@
+-{
+-       // See https://go.microsoft.com/fwlink/?LinkId=733558
+-       // for the documentation about the tasks.json format
+-       "version": "0.1.0",
+-       "command": "mkdocs",
+-       "isShellCommand": true,
+-       "showOutput": "always",
+-       "suppressTaskName": true,
+-       "tasks": [
+-               {
+-                       "taskName": "build docs",
+-                       "args": [
+-                               "build"
+-                       ],
+-                       "isBuildCommand": true
+-                       },
+-               {
+-
+-                       "taskName": "serve the docs",
+-                       "args": [
+-                               "serve",
+-                               "-a",
+-                               "127.0.0.1:8001"
+-                       ],
+-                       "isBackground": true
+-               }
+-       ]
+-}
+\ No newline at end of file
 ```
 
-### `git diff master..origin/master` zeigt Unterschiede zweier Branches an
+* zeigt alle Änderungen, die in Staging-Area aufgenommen wurden
+
+### `git diff master` zeigt Unterschiede zweier Branches an
 
 ```bash
-$ git commit
-[master 298221d] changed theme to readthedocs
- 1 file changed, 1 insertion(+)
-
-$ git diff master..origin/master
-diff --git a/mkdocs.yml b/mkdocs.yml
-index 3dca70e..3212117 100644
---- a/mkdocs.yml
-+++ b/mkdocs.yml
-@@ -1,2 +1 @@
- site_name: Workshop Dokumentationen
--theme: readthedocs
+$ git diff origin/master
+diff --git a/.gitignore b/.gitignore
+index c9490a5..4eeb754 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1 +1,2 @@
+ /site
++/.vscode
+diff --git a/docs/vufind-docker.md b/docs/vufind-docker.md
+new file mode 100644
+index 0000000..a6ea6d2
+--- /dev/null
++++ b/docs/vufind-docker.md
+@@ -0,0 +1,6 @@
++# VuFind-Entwicklung mit Docker
++
++## Vorbereitung
++
++* installiere GIT
++* installiere Docker
+\ No newline at end of file
 ```
 
 * Vorsicht bei der Reihenfolge: erst kommt die Basis, dann der Ziel-Branch. Die Änderungen, die sich ergeben würden den Basis-Branch an den Ziel-Branch angleichen.
+* wird der Zielbranch weggelassen, wird als Ziel die Arbeitskopie angenommen
+
+### `git diff --name-only master` zeigt nur die betroffenen Dateien
+
+```bash
+$ git diff --name-only origin/master
+.gitignore
+docs/vufind-docker.md
+```
 
 ### `git show [commit]` zeigt Metadaten und Änderungen des angegebenen Commits
 
 ```
 $ git show
-commit 298221dd4482dc69057a0e938086e5c432f1a247
+commit 0e1dd75b706268078e47a8db2614abba96416605
+Merge: e02bbf9 057be63
 Author: Roy Trenneman <roy@reynholm-industries.co.uk>
-Date:   Fri Apr 28 11:30:02 2017 +0200
+Date:   Wed May 10 16:18:51 2017 +0200
 
-    changed theme to readthedocs
-
-diff --git a/mkdocs.yml b/mkdocs.yml
-index 3212117..3dca70e 100644
---- a/mkdocs.yml
-+++ b/mkdocs.yml
-@@ -1 +1,2 @@
- site_name: Workshop Dokumentationen
-+theme: readthedocs
+    Merge branch 'master' of git.ub.intern.uni-leipzig.de:git-workshop into create-vufind-docker-docs
 ```
 
 * wird kein Commit angegeben, wird der letzte Commit des aktuellen Branches angezeigt

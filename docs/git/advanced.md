@@ -1,4 +1,4 @@
-# GIT-Advanced
+# GIT-Advanced [WIP]
 
 ## Repository anlegen
 
@@ -396,6 +396,30 @@ Fast-forward
 * ermöglicht irreversiblen Eingriff in die Projekt-Historie
 * Änderung bereits veröffentlichter Commits sollte vermieden werden
 * Veröffentlichung einer geänderten Historie ist standardmäßig nicht erlaubt
+
+### `git ls-files --other --ignored --exclude-standard` zeigt von Versionskontrolle ausgenommene Dateien
+
+```bash
+$ git ls-files  --other  --ignored --exclude-standard
+site/css/highlight.css
+site/css/theme.css
+site/css/theme_extra.css
+...
+site/search.html
+site/sitemap.xml
+site/vufind/index.html
+```
+
+### `git clean -fdX` löscht alle Dateien, die von der Versionkontrolle ausgenommen sind
+
+```bash
+$ git clean -fdXn
+Würde site/ löschen
+
+$ git clean -fdX
+Lösche site/
+```
+* Vorsicht! `-x` löscht auch Dateien, die nicht zur Versionkontrolle hinzugefügt wurden
 
 ## Erweiterte Kenntnisse
 
