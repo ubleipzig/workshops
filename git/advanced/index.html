@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Advanced - Workshop-Dokumentationen</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Advanced";
+    var mkdocs_page_input_path = "git/advanced.md";
+    var mkdocs_page_url = "/git/advanced/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Workshop-Dokumentationen</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">GIT</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../beginners/">Beginners</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Advanced</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#git-advanced-wip">GIT-Advanced [WIP]</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#repository-anlegen">Repository anlegen</a></li>
+        
+            <li><a class="toctree-l4" href="#commit-erstellen">Commit erstellen</a></li>
+        
+            <li><a class="toctree-l4" href="#branches">Branches</a></li>
+        
+            <li><a class="toctree-l4" href="#erweiterte-kenntnisse">Erweiterte Kenntnisse</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../vufind-docker/">VuFind-Docker</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../mkdocs/">MkDocs</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Workshop-Dokumentationen</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>GIT &raquo;</li>
+        
+      
+    
+    <li>Advanced</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="git-advanced-wip">GIT-Advanced [WIP]</h1>
+<h2 id="repository-anlegen">Repository anlegen</h2>
+<pre><code class="bash">$ git init git-workshop
+Initialisierte leeres Git-Repository in /home/jen/git-workshop/.git/
+
+$ cd git-workshop
+$ git status
+Auf Branch master
+
+Initialer Commit
+
+nichts zu committen (Erstellen/Kopieren Sie Dateien und benutzen Sie &quot;git add&quot; zum Versionieren)
+</code></pre>
+
+<ul>
+<li>initialisiert leeres GIT-Repository mit Arbeitsbereich</li>
+<li>wird kein Repository-Name angegeben, wird das Repository im aktuellen Verzeichnis initialisiert</li>
+</ul>
+<pre><code class="bash">$ git init --bare git-workshop
+Initialisierte leeres Git-Repository in /srv/jen/git-workshop/
+
+$ cd git-workshop
+$ git status
+fatal: This operation must be run in a work tree
+</code></pre>
+
+<ul>
+<li>initialisiert leeres GIT-Repository ohne Arbeitsbereich</li>
+</ul>
+<h2 id="commit-erstellen">Commit erstellen</h2>
+<h3 id="git-commit-amend-fugt-letztem-commit-neue-anderungen-hinzu"><code>git commit --amend</code> fügt letztem Commit neue Änderungen hinzu</h3>
+<pre><code class="bash">$ git add docs
+
+$ git status
+Auf Branch master
+Ihr Branch ist vor 'origin/master' um 1 Commit.
+  (benutzen Sie &quot;git push&quot;, um lokale Commits zu publizieren)
+zum Commit vorgemerkte Änderungen:
+  (benutzen Sie &quot;git reset HEAD &lt;Datei&gt;...&quot; zum Entfernen aus der Staging-Area)
+
+        neue Datei:     docs/mkdocs.md
+
+$ git commit --amend
+[master bfa931f] * moved brief mkdocs docu to separate page * modified index page
+ Date: Wed Apr 5 13:13:20 2017 +0200
+ 3 files changed, 6 insertions(+), 18 deletions(-)
+ rewrite docs/index.md (99%)
+ copy docs/{index.md =&gt; mkdocs.md} (100%)
+
+$ git status
+Auf Branch master
+Ihr Branch ist vor 'origin/master' um 1 Commit.
+  (benutzen Sie &quot;git push&quot;, um lokale Commits zu publizieren)
+nothing to commit, working tree clean
+
+</code></pre>
+
+<h2 id="branches">Branches</h2>
+<h3 id="git-fetch-origin-holt-veroffentlichte-anderungen-vom-remote-server"><code>git fetch [origin]</code> holt veröffentlichte Änderungen vom Remote-Server</h3>
+<pre><code class="bash">$ git fetch
+remote: Zähle Objekte: 5, Fertig.
+remote: Komprimiere Objekte: 100% (4/4), Fertig.
+remote: Total 5 (delta 0), reused 0 (delta 0)
+Entpacke Objekte: 100% (5/5), Fertig.
+Von git@git.ub.intern.uni-leipzig.de:git-workshop
+   5e58653..bfa931f  master     -&gt; origin/master
+</code></pre>
+
+<ul>
+<li>Änderungen werden nicht auf lokale Branches angewendet, sondern zwischengespeichert</li>
+</ul>
+<h3 id="git-merge-master-vereint-die-anderungen-von-master-mit-dem-aktuellen-branch"><code>git merge master</code> vereint die Änderungen von <em>master</em> mit dem aktuellen Branch</h3>
+<pre><code class="bash">$ git merge master
+Already up-to-date.
+</code></pre>
+
+<ul>
+<li>keine Änderungen im lokalen Master</li>
+</ul>
+<pre><code class="bash">]$ git checkout master
+Zu Branch 'master' gewechselt
+Ihr Branch ist zu 'origin/master' um 1 Commit hinterher, und kann vorgespult werden.
+  (benutzen Sie &quot;git pull&quot;, um Ihren lokalen Branch zu aktualisieren)
+</code></pre>
+
+<ul>
+<li>Tracking-Konfiguration sorgt für die Information, dass der lokale <em>master</em>-Branch
+ dem Branch auf dem Remote-Servers hinterher ist.</li>
+</ul>
+<h3 id="git-merge-vereint-die-anderungen"><code>git merge</code> vereint die Änderungen</h3>
+<pre><code class="bash">$ git merge
+Aktualisiere 5e58653..bfa931f
+Fast-forward
+ docs/index.md  | 18 +++---------------
+ docs/mkdocs.md | 17 +++++++++++++++++
+ mkdocs.yml     |  2 +-
+ 3 files changed, 21 insertions(+), 16 deletions(-)
+ create mode 100644 docs/mkdocs.md
+
+$ git log
+commit bfa931fdb94fd844820263e2bb5dec8e02433673
+Author: Roy Trenneman &lt;roy@reynholm-industries.co.uk&gt;
+Date:   Wed Apr 5 13:13:20 2017 +0200
+
+    * moved brief mkdocs docu to separate page
+    * modified index page
+
+commit 5e586536cd4267fbf02a5c9e2ef8397b4e86294f
+Author: Jen Barber &lt;jen@reynholm-industries.co.uk&gt;
+Date:   Wed Apr 5 10:49:15 2017 +0200
+
+    created mkdocs structure
+</code></pre>
+
+<ul>
+<li>aktualisiert den lokalen <em>master</em>-Branch mit auf Remote-Server <em>origin</em>
+ veröffentlichten Änderungen für <em>master</em>-Branch</li>
+</ul>
+<h3 id="git-merge-master-again-aktualisiert-den-aktuellen-branch"><code>git merge master</code> (again) aktualisiert den aktuellen Branch</h3>
+<pre><code class="bash">$ git merge master
+Merge made by the 'recursive' strategy.
+ docs/index.md  | 18 +++---------------
+ docs/mkdocs.md | 17 +++++++++++++++++
+ mkdocs.yml     |  2 +-
+ 3 files changed, 21 insertions(+), 16 deletions(-)
+ create mode 100644 docs/mkdocs.md
+
+$ git log
+commit 75a7b05d54c67c4aebf7f7129b0c1e67325ff808
+Merge: edcb49e 117e2c4
+Author: Maurice Moss &lt;maurice@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 18:15:27 2017 +0200
+
+    Merge branch 'master' into create-git-workshop-docs
+
+commit 117e2c4265322d8fcca898de9bea9749666ebcb4
+Author: Roy Trenneman &lt;roy@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 17:56:00 2017 +0200
+
+    * moved brief mkdocs docu to separate page
+    * modified index page
+
+commit edcb49e0bcb60c406fed61c1002fdafd16e559e8
+Author: Maurice Moss &lt;maurice@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 16:53:41 2017 +0200
+
+    added git-workshop-documentation
+
+commit 5e586536cd4267fbf02a5c9e2ef8397b4e86294f
+Author: Jen Barber &lt;jen@reynholm-industries.co.uk&gt;
+Date:   Wed Apr 5 10:49:15 2017 +0200
+
+    created mkdocs structure
+</code></pre>
+
+<ul>
+<li>erstellt einen Merge-Commit, der die Änderungen des lokalen <em>master</em>-Branch
+ mit den Änderungen auf dem aktuellen Branch zusammenführt</li>
+</ul>
+<pre><code class="bash">2017-04-10 18:15 Maurice Moss  M─┐ [create-git-workshop-docs] Merge branch 'master' into create-git-workshop-docs
+2017-04-10 17:56 Roy Trenneman │ o [master] {origin/master} * moved brief mkdocs docu to separate page * modified index
+2017-04-10 16:53 Maurice Moss  o │ {origin/create-git-workshop-docs} added git-workshop-documentation
+2017-04-05 10:49 Jen Barber    I─┘ created mkdocs structure
+</code></pre>
+
+<h4 id="git-merge-branch-bringt-anderungen-auf-den-master"><code>git merge &lt;branch&gt;</code> bringt Änderungen auf den Master</h4>
+<pre><code class="bash">$ git merge create-git-workshop-docs
+Aktualisiere 117e2c4..26171f5
+Fast-forward
+ docs/git.md | 464 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 464 insertions(+)
+ create mode 100644 docs/git.md
+
+
+$ git log
+commit 26171f5ee64aa72b16ac643e8a2b64654fefa7fa
+Author: Maurice Moss &lt;maurice@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 18:28:19 2017 +0200
+
+    more into git documentation
+
+commit 45e97f7aa2244066b2d018397d4ea29da6d5d6c3
+Merge: 26796c0 117e2c4
+Author: Maurice Moss &lt;maurice@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 18:56:24 2017 +0200
+
+    Merge remote-tracking branch 'origin/master' into create-git-workshop-docs
+
+commit 26796c04f33a4ecad877c6977afac3179dbe6a41
+Author: Maurice Moss &lt;maurice@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 16:53:41 2017 +0200
+
+    added git-workshop-documentation
+
+commit 117e2c4265322d8fcca898de9bea9749666ebcb4
+Author: Roy Trenneman &lt;roy@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 17:56:00 2017 +0200
+
+    * moved brief mkdocs docu to separate page
+    * modified index page
+
+commit 5e586536cd4267fbf02a5c9e2ef8397b4e86294f
+Author: Jen Barber &lt;jen@reynholm-industries.co.uk&gt;
+Date:   Wed Apr 5 10:49:15 2017 +0200
+
+    created mkdocs structure
+</code></pre>
+
+<ul>
+<li>holt alle Commits eines Branches in den aktuellen Branch</li>
+<li>verunreinigt GIT-log</li>
+</ul>
+<pre><code>2017-04-10 18:28 Maurice Moss  o [master] [create-git-workshop-docs] more into git documentation
+2017-04-10 18:56 Maurice Moss  M─┐ Merge remote-tracking branch 'origin/master' into create-git-workshop-docs
+2017-04-10 17:56 Roy Trenneman │ o {origin/master} * moved brief mkdocs docu to separate page * modified index page
+2017-04-10 16:53 Maurice Moss  o │ added git-workshop-documentation
+2017-04-05 10:49 Jen Barber    I─┘ created mkdocs structure
+</code></pre>
+
+<h4 id="git-branch-d-local-branch-name-loscht-den-branch"><code>git branch -d &lt;local-branch-name&gt;</code> löscht den Branch</h4>
+<h3 id="branches-alternative-strategie">Branches (Alternative Strategie)</h3>
+<h4 id="git-rebase-master-setzt-die-commits-des-aktuellen-branchs-auf-den-vorgespulten-master"><code>git rebase master</code> setzt die Commits des aktuellen Branchs auf den vorgespulten <em>master</em></h4>
+<pre><code class="bash">$ git rebase master
+Zunächst wird der Branch zurückgespult, um Ihre Änderungen
+darauf neu anzuwenden ...
+Wende an: added git-workshop-documentation
+
+$ git log
+commit 58cf8023e4e1d41980bca3aefea8eb4148a1298e
+Author: Maurice Moss &lt;maurice@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 16:53:41 2017 +0200
+
+    added git-workshop-documentation
+
+commit 117e2c4265322d8fcca898de9bea9749666ebcb4
+Author: Roy Trenneman &lt;roy@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 17:56:00 2017 +0200
+
+    * moved brief mkdocs docu to separate page
+    * modified index page
+
+commit 5e586536cd4267fbf02a5c9e2ef8397b4e86294f
+Author: Jen Barber &lt;jen@reynholm-industries.co.uk&gt;
+Date:   Wed Apr 5 10:49:15 2017 +0200
+
+    created mkdocs structure
+</code></pre>
+
+<ul>
+<li>ignoriert chronologische Reihenfolge der Commits</li>
+<li>hält Verzweigung sauber</li>
+<li>sollte Standardverhalten sein, eigenen Feature-Branch aktuell zu halten</li>
+</ul>
+<pre><code class="bash">2017-04-10 16:53 Maurice Moss  o [create-git-workshop-docs] added git-workshop-documentation
+2017-04-10 17:56 Roy Trenneman o [master] {origin/master} * moved brief mkdocs docu to separate page * modified index p
+2017-04-05 10:49 Jen Barber    I created mkdocs structure
+</code></pre>
+
+<h4 id="git-merge-squash-branch-holt-anderungen-eines-branches-in-den-aktuellen-branch"><code>git merge --squash &lt;branch&gt;</code> holt Änderungen eines Branches in den aktuellen Branch</h4>
+<pre><code class="bash">$ git merge --squash create-git-workshop-docs
+Aktualisiere 117e2c4..550cc4a
+Fast-forward
+Quetsche Commit -- HEAD wird nicht aktualisiert
+ docs/git.md | 464 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 464 insertions(+)
+ create mode 100644 docs/git.md
+
+$ git status
+Auf Branch master
+Ihr Branch ist auf dem selben Stand wie 'origin/master'.
+zum Commit vorgemerkte Änderungen:
+  (benutzen Sie &quot;git reset HEAD &lt;Datei&gt;...&quot; zum Entfernen aus der Staging-Area)
+
+        neue Datei:     docs/git.md
+
+$ git commit
+[master 242d2af] merged git-workflow documentation
+ 1 file changed, 464 insertions(+)
+ create mode 100644 docs/git.md
+
+$ git log
+commit beafe7411a4082f5297d073f4cec983d5899a52f
+Author: Maurice Moss &lt;maurice@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 18:49:58 2017 +0200
+
+    merged git-workflow documentation
+
+commit 117e2c4265322d8fcca898de9bea9749666ebcb4
+Author: Roy Trenneman &lt;roy@reynholm-industries.co.uk&gt;
+Date:   Mon Apr 10 17:56:00 2017 +0200
+
+    * moved brief mkdocs docu to separate page
+    * modified index page
+
+commit 5e586536cd4267fbf02a5c9e2ef8397b4e86294f
+Author: Jen Barber &lt;jen@reynholm-industries.co.uk&gt;
+Date:   Wed Apr 5 10:49:15 2017 +0200
+
+    created mkdocs structure
+</code></pre>
+
+<ul>
+<li>holt Änderungen, die sich aus allen Commits des angegebenen Branches ergeben
+ in die Staging-Area</li>
+<li><code>commit</code> erstellt einen neuen Commit auf dem Master, ohne jegliche Referenz zu den ursprünglichen Commits</li>
+</ul>
+<pre><code class="bash">2017-04-10 18:49 Maurice Moss  o [master] merged git-workflow documentation
+2017-04-10 17:56 Roy Trenneman o {origin/master} * moved brief mkdocs docu to separate page * modified index page
+2017-04-05 10:49 Jen Barber    I created mkdocs structure
+</code></pre>
+
+<h3 id="ignorierte-dateien">Ignorierte Dateien</h3>
+<h4 id="git-add-f-filefolder-fugt-ignorierte-dateien-zur-versionskontrolle-hinzu"><code>git add -f [file|folder]</code> fügt ignorierte Dateien zur Versionskontrolle hinzu</h4>
+<pre><code class="bash">$ git add .vscode/tasks.json
+Die folgenden Pfade werden durch eine Ihrer &quot;.gitignore&quot; Dateien ignoriert:
+.vscode/tasks.json
+Verwenden Sie -f wenn Sie diese wirklich hinzufügen möchten.
+
+$ git status
+Auf Branch master
+Ihr Branch ist auf dem selben Stand wie 'origin/master'.
+zum Commit vorgemerkte Änderungen:
+  (benutzen Sie &quot;git reset HEAD &lt;Datei&gt;...&quot; zum Entfernen aus der Staging-Area)
+
+        neue Datei:     .vscode/tasks.json
+</code></pre>
+
+<h3 id="git-reset-commit-macht-alle-commits-bis-zum-angegebenen-ruckgangig"><code>git reset [commit]</code> macht alle Commits bis zum angegebenen rückgängig</h3>
+<pre><code class="bash">$ git reset HEAD^
+Nicht zum Commit vorgemerkte Änderungen nach Zurücksetzung:
+M       docs/git.md
+
+$ git status
+Auf Branch master
+Ihr Branch ist zu 'origin/master' um 1 Commit hinterher, und kann vorgespult werden.
+  (benutzen Sie &quot;git pull&quot;, um Ihren lokalen Branch zu aktualisieren)
+Änderungen, die nicht zum Commit vorgemerkt sind:
+  (benutzen Sie &quot;git add &lt;Datei&gt;...&quot;, um die Änderungen zum Commit vorzumerken)
+  (benutzen Sie &quot;git checkout -- &lt;Datei&gt;...&quot;, um die Änderungen im Arbeitsverzeichnis zu verwerfen)
+
+        geändert:       docs/git.md
+
+keine Änderungen zum Commit vorgemerkt (benutzen Sie &quot;git add&quot; und/oder &quot;git commit -a&quot;)
+</code></pre>
+
+<ul>
+<li>relative Angaben sind möglich <em>HEAD^</em> bedeutet <em>letzter Commit</em></li>
+<li>ermöglicht das schrittweise Zurückgehen der Commits, ohne die Änderungen zu verlieren</li>
+</ul>
+<h3 id="git-reset-hard-commit-macht-alle-commits-bis-zum-angegebenen-ruckgangig-und-verwirft-alle-anderungen"><code>git reset --hard [commit]</code> macht alle Commits bis zum angegebenen rückgängig und verwirft alle Änderungen</h3>
+<pre><code class="bash">$ git reset --hard HEAD^
+HEAD ist jetzt bei 9288761 added vufind-docs, modified mkdocs, modified settings
+
+$ git status
+Auf Branch master
+Ihr Branch ist zu 'origin/master' um 1 Commit hinterher, und kann vorgespult werden.
+  (benutzen Sie &quot;git pull&quot;, um Ihren lokalen Branch zu aktualisieren)
+nothing to commit, working tree clean
+
+$ git pull
+Aktualisiere 9288761..b822b5e
+Fast-forward
+ docs/git.md | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+</code></pre>
+
+<ul>
+<li>hilft bei Fehlersuche, z.B. ab wann ein bestimmter Fehler auftritt</li>
+<li>ermöglicht irreversiblen Eingriff in die Projekt-Historie</li>
+<li>Änderung bereits veröffentlichter Commits sollte vermieden werden</li>
+<li>Veröffentlichung einer geänderten Historie ist standardmäßig nicht erlaubt</li>
+</ul>
+<h3 id="git-ls-files-other-ignored-exclude-standard-zeigt-von-versionskontrolle-ausgenommene-dateien"><code>git ls-files --other --ignored --exclude-standard</code> zeigt von Versionskontrolle ausgenommene Dateien</h3>
+<pre><code class="bash">$ git ls-files  --other  --ignored --exclude-standard
+site/css/highlight.css
+site/css/theme.css
+site/css/theme_extra.css
+...
+site/search.html
+site/sitemap.xml
+site/vufind/index.html
+</code></pre>
+
+<h3 id="git-clean-fdx-loscht-alle-dateien-die-von-der-versionkontrolle-ausgenommen-sind"><code>git clean -fdX</code> löscht alle Dateien, die von der Versionkontrolle ausgenommen sind</h3>
+<pre><code class="bash">$ git clean -fdXn
+Würde site/ löschen
+
+$ git clean -fdX
+Lösche site/
+</code></pre>
+
+<ul>
+<li>Vorsicht! <code>-x</code> löscht auch Dateien, die nicht zur Versionkontrolle hinzugefügt wurden</li>
+</ul>
+<h2 id="erweiterte-kenntnisse">Erweiterte Kenntnisse</h2>
+<pre><code class="ascii">+       master      &lt;--+
+|                      |
++-+     .git           |
+  +-+                  |                                  +----------------------------------+
+    +-+ origin/master -+                                  |                                  |
+    |                                                     | Remote (origin)                  |
+    +-+ origin/create-&gt;ufind-workshop-docs                |  +                               |
+    |                                                     |  |                               |
+    +-+ remotes/origin/master           &lt;---------------&gt; |  +-+ master                      |
+    |                                                     |  |                               |
+    +-+ remotes/origin/create-&gt;ufind-workshop-docs &lt;----&gt; |  +-+ create-&gt;ufind-workshop-docs |
+    |                                                     |  |                               |
+    +-+ remotes/origin/create-git-workshop-docs &lt;-------&gt; |  +-+ create-git-workshop-docs    |
+                                                          |                                  |
+                                                          +----------------------------------+
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../vufind-docker/" class="btn btn-neutral float-right" title="VuFind-Docker">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../beginners/" class="btn btn-neutral" title="Beginners"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../beginners/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../vufind-docker/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
