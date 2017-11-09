@@ -18,3 +18,7 @@
 ### serve documentation locally (for live review)
 
     mkdocs serve
+
+### deploy to github
+
+    mkdocs gh-deploy
