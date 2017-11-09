@@ -1,5 +1,8 @@
 # workshop-docs
 
+see https://ubleipzig.github.io/workshops
+
+
 ## Requirements
 
 * [mkdocs](http://mkdocs.org/)
